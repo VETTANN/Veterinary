@@ -2,7 +2,13 @@ package com.veterinary;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "appointment")
@@ -45,7 +51,6 @@ public class Appointment {
     public String getDiagnosisTreatment() { return diagnosisTreatment; }
     public boolean isVaccinated() { return isVaccinated; }
 
-    // --- Сетери (Додано для виправлення помилок у тестах та росту JaCoCo) ---
     public void setId(Integer id) { this.id = id; }
     
     public void setPet(Pet pet) { this.pet = pet; }

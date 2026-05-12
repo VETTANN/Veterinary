@@ -25,11 +25,9 @@ class VeterinaryApplicationTest {
 
     @BeforeAll
     static void initFactory() {
-        // ✅ Будуємо SessionFactory програмно — без жодного cfg.xml файлу
-        // Використовує H2 in-memory, не потребує PostgreSQL і жодних файлів
+
         Configuration cfg = new Configuration();
 
-        // H2 in-memory налаштування
         cfg.setProperty(Environment.DRIVER,   "org.h2.Driver");
         cfg.setProperty(Environment.URL,      "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         cfg.setProperty(Environment.USER,     "sa");
@@ -39,7 +37,6 @@ class VeterinaryApplicationTest {
         cfg.setProperty(Environment.SHOW_SQL, "false");
         cfg.setProperty("hibernate.current_session_context_class", "thread");
 
-        // Реєструємо всі сутності
         cfg.addAnnotatedClass(Owner.class);
         cfg.addAnnotatedClass(Veterinarian.class);
         cfg.addAnnotatedClass(Pet.class);
@@ -94,21 +91,18 @@ class VeterinaryApplicationTest {
         assertTrue(runApp("99\nabc\n4\n").length() > 0);
     }
 
-    /** case "3" + case "2" порожня БД → if (results.isEmpty()) */
     @Test @Order(3)
     void menu_clear_thenReport_emptyDB() throws Exception {
         String out = runApp("3\n2\n4\n");
         assertTrue(out.contains("!!!"));
     }
 
-    /** case "1" — завантаження даних */
     @Test @Order(4)
     void menu_loadData() throws Exception {
         runApp("3\n4\n");
         assertDoesNotThrow(() -> runApp("1\n4\n"));
     }
 
-    /** case "2" з даними → else-гілка */
     @Test @Order(5)
     void menu_report_withData() throws Exception {
         runApp("3\n4\n");
@@ -119,13 +113,11 @@ class VeterinaryApplicationTest {
         assertTrue(withData.length() > empty.length());
     }
 
-    /** Повний цикл — усі 5 гілок switch */
     @Test @Order(6)
     void menu_fullCycle_allBranches() throws Exception {
         assertDoesNotThrow(() -> runApp("3\n2\n1\n2\n99\n4\n"));
     }
 
-    /** !scanner.hasNextLine() → break */
     @Test @Order(7)
     void menu_eof_terminatesGracefully() {
         assertDoesNotThrow(() -> {
@@ -142,7 +134,6 @@ class VeterinaryApplicationTest {
         assertDoesNotThrow(() -> runApp("3\n3\n4\n"));
     }
 
-    /** printMenu() напряму */
     @Test @Order(9)
     void directCall_printMenu() {
         MainApp app = new MainApp();
@@ -150,7 +141,6 @@ class VeterinaryApplicationTest {
         assertDoesNotThrow(app::printMenu);
     }
 
-    /** Пряме покриття всіх методів без stdin */
     @Test @Order(10)
     void directCall_loadShowClear_sequence() {
         MainApp app = new MainApp();
@@ -162,7 +152,6 @@ class VeterinaryApplicationTest {
         assertDoesNotThrow(app::showReport);
     }
 
-    /** MainApp.main() — catch(Exception) коли PostgreSQL недоступний */
     @Test @Order(11)
     void mainMethod_catchBranch_whenNoPostgres() {
         assertDoesNotThrow(() -> {
@@ -172,10 +161,6 @@ class VeterinaryApplicationTest {
             finally { System.setIn(old); }
         });
     }
-
-    // =========================================================================
-    //  Сутності — страховий блок покриття
-    // =========================================================================
 
     @Test @Order(20)
     void entities_allGettersSettersToString() {
@@ -222,7 +207,6 @@ class VeterinaryApplicationTest {
             () -> assertNotNull(a.toString())
         );
 
-        // null-pet гілка toString
         Appointment nullPet = new Appointment();
         nullPet.setDiagnosisTreatment("x");
         assertTrue(nullPet.toString().contains("null"));

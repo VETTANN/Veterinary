@@ -18,13 +18,11 @@ class AppointmentInfoDTOTest {
             "Петренко І.В.", 5, "Огляд", true
         );
 
-        // Перевірка основних полів
         assertEquals("Барсік", dto.getPetName());
         assertEquals("Коваленко", dto.getOwnerLastName());
         assertEquals(5, dto.getVetExperience());
         assertTrue(dto.isVaccinated());
         
-        // Перевірка toString
         assertTrue(dto.toString().contains("Барсік"));
     }
 }

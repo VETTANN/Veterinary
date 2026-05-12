@@ -53,7 +53,6 @@ public class Owner {
         this.phone = phone;
     }
 
-    // --- Геттери ---
     public Integer getOwnerId() { return ownerId; }
     public String getLastName() { return lastName; }
     public String getFirstName() { return firstName; }
@@ -63,8 +62,7 @@ public class Owner {
     public String getHouse() { return house; }
     public String getApartment() { return apartment; }
     public String getPhone() { return phone; }
-
-    // --- Сеттери (Додано для виправлення помилок у тестах) ---
+    
     public void setOwnerId(Integer ownerId) { this.ownerId = ownerId; }
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

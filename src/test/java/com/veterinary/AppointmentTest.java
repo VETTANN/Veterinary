@@ -12,12 +12,10 @@ class AppointmentTest {
         Pet pet = new Pet(owner, "Барсік", "кіт");
         Veterinarian vet = new Veterinarian("Мельник Оксана", 7);
         
-        // Створюємо прийом
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
         Appointment app = new Appointment(pet, vet, date, time, "Щеплення", true);
 
-        // Перевіряємо геттери
         assertEquals(pet, app.getPet());
         assertEquals(vet, app.getVeterinarian());
         assertEquals(date, app.getAppointmentDate());

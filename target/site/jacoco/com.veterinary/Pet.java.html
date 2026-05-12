@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="uk"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Veterinary-Project</a> &gt; <a href="index.source.html" class="el_package">com.veterinary</a> &gt; <span class="el_source">Pet.java</span></div><h1>Pet.java</h1><pre class="source lang-java linenums">package com.veterinary;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 
 @Entity
 @Table(name = &quot;pet&quot;)
@@ -20,25 +28,25 @@ public class Pet {
     @Column(name = &quot;species&quot;)
     private String species;
 
-<span class="fc" id="L23">    public Pet() {}</span>
+<span class="fc" id="L31">    public Pet() {}</span>
 
-<span class="fc" id="L25">    public Pet(Owner owner, String name, String species) {</span>
-<span class="fc" id="L26">        this.owner = owner;</span>
-<span class="fc" id="L27">        this.name = name;</span>
-<span class="fc" id="L28">        this.species = species;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L33">    public Pet(Owner owner, String name, String species) {</span>
+<span class="fc" id="L34">        this.owner = owner;</span>
+<span class="fc" id="L35">        this.name = name;</span>
+<span class="fc" id="L36">        this.species = species;</span>
+<span class="fc" id="L37">    }</span>
 
-<span class="fc" id="L31">    public Integer getPetId() { return petId; }</span>
-<span class="fc" id="L32">    public String getName() { return name; }</span>
-<span class="fc" id="L33">    public String getSpecies() { return species; }</span>
-<span class="fc" id="L34">    public Owner getOwner() { return owner; }</span>
-<span class="fc" id="L35">    public void setName(String name) { this.name = name; }</span>
-<span class="fc" id="L36">    public void setSpecies(String species) { this.species = species; }</span>
-<span class="fc" id="L37">    public void setOwner(Owner owner) { this.owner = owner; }</span>
+<span class="fc" id="L39">    public Integer getPetId() { return petId; }</span>
+<span class="fc" id="L40">    public String getName() { return name; }</span>
+<span class="fc" id="L41">    public String getSpecies() { return species; }</span>
+<span class="fc" id="L42">    public Owner getOwner() { return owner; }</span>
+<span class="fc" id="L43">    public void setName(String name) { this.name = name; }</span>
+<span class="fc" id="L44">    public void setSpecies(String species) { this.species = species; }</span>
+<span class="fc" id="L45">    public void setOwner(Owner owner) { this.owner = owner; }</span>
 
     @Override
 public String toString() {
-<span class="fc" id="L41">    return &quot;Pet{&quot; +</span>
+<span class="fc" id="L49">    return &quot;Pet{&quot; +</span>
             &quot;petId=&quot; + petId +
             &quot;, name='&quot; + name + '\'' +
             &quot;, species='&quot; + species + '\'' +

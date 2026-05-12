@@ -51,7 +51,6 @@ public class AppointmentInfoDTO {
     public String getOwnerMiddleName() { return ownerMiddleName; }
     public String getOwnerPhone() { return ownerPhone; }
     
-    // Геттери, які вимагає тест у списку Problems
     public String getOwnerCity() { return ownerCity; }
     public String getCity() { return ownerCity; } // Аліас для тесту
     
