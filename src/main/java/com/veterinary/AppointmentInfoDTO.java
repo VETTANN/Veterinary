@@ -4,82 +4,80 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AppointmentInfoDTO {
-    private LocalDate date;
-    private LocalTime time;
-    private String lastName;
-    private String firstName;
-    private String middleName;
-    private String phone;
-    private String city;
-    private String street;
-    private String house;
-    private String apartment;
+    private LocalDate appointmentDate;
+    private LocalTime appointmentTime;
+    private String ownerLastName;
+    private String ownerFirstName;
+    private String ownerMiddleName;
+    private String ownerPhone;
+    private String ownerCity;
+    private String ownerStreet;
+    private String ownerHouse;
+    private String ownerApartment;
     private String petName;
-    private String species;
-    private String vetName;
-    private Integer vetExp;
+    private String petSpecies;
+    private String vetFullName;
+    private int vetExperience;
     private String diagnosis;
-    private Boolean isVaccinated;
+    private boolean isVaccinated;
 
-    // Конструктор повинен приймати ті ж типи, що й поля вище
-    public AppointmentInfoDTO(LocalDate date, LocalTime time, String lastName, 
-                              String firstName, String middleName, String phone, 
-                              String city, String street, String house, 
-                              String apartment, String petName, String species, 
-                              String vetName, Integer vetExp, String diagnosis, 
-                              Boolean isVaccinated) {
-        this.date = date;
-        this.time = time;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.phone = phone;
-        this.city = city;
-        this.street = street;
-        this.house = house;
-        this.apartment = apartment;
+    public AppointmentInfoDTO(LocalDate appointmentDate, LocalTime appointmentTime,
+                              String ownerLastName, String ownerFirstName, String ownerMiddleName, String ownerPhone,
+                              String ownerCity, String ownerStreet, String ownerHouse, String ownerApartment,
+                              String petName, String petSpecies, String vetFullName, int vetExperience,
+                              String diagnosis, boolean isVaccinated) {
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+        this.ownerLastName = ownerLastName;
+        this.ownerFirstName = ownerFirstName;
+        this.ownerMiddleName = ownerMiddleName;
+        this.ownerPhone = ownerPhone;
+        this.ownerCity = ownerCity;
+        this.ownerStreet = ownerStreet;
+        this.ownerHouse = ownerHouse;
+        this.ownerApartment = ownerApartment;
         this.petName = petName;
-        this.species = species;
-        this.vetName = vetName;
-        this.vetExp = vetExp;
+        this.petSpecies = petSpecies;
+        this.vetFullName = vetFullName;
+        this.vetExperience = vetExperience;
         this.diagnosis = diagnosis;
         this.isVaccinated = isVaccinated;
     }
+    
+    public LocalDate getAppointmentDate() { return appointmentDate; }
+    public LocalTime getAppointmentTime() { return appointmentTime; }
+    public String getOwnerLastName() { return ownerLastName; }
+    public String getOwnerFirstName() { return ownerFirstName; }
+    public String getOwnerMiddleName() { return ownerMiddleName; }
+    public String getOwnerPhone() { return ownerPhone; }
+    
+    // Геттери, які вимагає тест у списку Problems
+    public String getOwnerCity() { return ownerCity; }
+    public String getCity() { return ownerCity; } // Аліас для тесту
+    
+    public String getOwnerStreet() { return ownerStreet; }
+    public String getStreet() { return ownerStreet; } // Аліас для тесту
+    
+    public String getOwnerHouse() { return ownerHouse; }
+    public String getHouse() { return ownerHouse; } // Аліас для тесту
+    
+    public String getOwnerApartment() { return ownerApartment; }
+    public String getApartment() { return ownerApartment; } // Аліас для тесту
 
-    private String getOwnerFullName() {
-        return lastName + " " + firstName + " " + middleName;
-    }
-
-    private String getPetFull() {
-        return petName + " (" + species + ")";
-    }
-
-    private String getAddressFull() {
-        String apt = (apartment != null) ? ", " + apartment : "";
-        String addr = city + ", " + street + ", " + house + apt;
-        return addr.length() > 30 ? addr.substring(0, 27) + "..." : addr;
-    }
+    public String getPetName() { return petName; }
+    public String getPetSpecies() { return petSpecies; }
+    public String getVetFullName() { return vetFullName; }
+    public int getVetExperience() { return vetExperience; }
+    public String getDiagnosis() { return diagnosis; }
+    public boolean isVaccinated() { return isVaccinated; }
 
     @Override
     public String toString() {
-        String diag = diagnosis.length() > 30 
-                ? diagnosis.substring(0, 27) + "..." : diagnosis;
-        String owner = getOwnerFullName().length() > 25 
-                ? getOwnerFullName().substring(0, 22) + "..." : getOwnerFullName();
-        
-        String format = "| %-25s | %-18s | %-25s | %-12s | %-8s | %-30s | %-30s | %-10s | %-5s | %-15s |";
-        
-        return String.format(format,
-                owner,
-                getPetFull(),
-                vetName,
-                date,
-                time,
-                diag,
-                getAddressFull(),
-                (isVaccinated ? "Так" : "Ні"),
-                vetExp,
-                phone
-        );
+        return String.format("| %-25s | %-15s | %-25s | %-12s | %-5s |",
+                ownerLastName + " " + (ownerFirstName != null ? ownerFirstName.substring(0, 1) + "." : ""),
+                petName + " (" + petSpecies + ")",
+                vetFullName,
+                appointmentDate,
+                appointmentTime);
     }
 }

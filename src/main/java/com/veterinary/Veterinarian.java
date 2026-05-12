@@ -1,39 +1,28 @@
 package com.veterinary;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "veterinarian")
 public class Veterinarian {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vet_id")
-    private Integer vetId;
+    private Integer id;
 
-    @Column(name = "full_name", nullable = false)
     private String fullName;
-
-    @Column(name = "experience_years")
-    private Integer experienceYears;
+    private int experienceYears;
 
     public Veterinarian() {}
 
-    public Veterinarian(String fullName, Integer experienceYears) {
+    public Veterinarian(String fullName, int experienceYears) {
         this.fullName = fullName;
         this.experienceYears = experienceYears;
     }
 
-    public String getFullName() { 
-        return fullName; 
-    }
+    public String getFullName() { return fullName; }
+    public int getExperienceYears() { return experienceYears; }
 
-    public Integer getExperienceYears() { 
-        return experienceYears; 
-    }
-    
+    // Сетери, які виправляють помилки в тесті:
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setExperienceYears(int experienceYears) { this.experienceYears = experienceYears; }
 }

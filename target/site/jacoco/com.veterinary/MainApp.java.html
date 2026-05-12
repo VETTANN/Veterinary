@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="uk"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Veterinary-Project</a> &gt; <a href="index.source.html" class="el_package">com.veterinary</a> &gt; <span class="el_source">MainApp.java</span></div><h1>MainApp.java</h1><pre class="source lang-java linenums">package com.veterinary;
+
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Scanner;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+<span class="fc" id="L14">public class MainApp {</span>
+
+    // ── Змінено: factory тепер поле екземпляра (не static) ──────────────────
+    // Це дозволяє тестам підставити власну SessionFactory через setFactory(),
+    // не запускаючи main() і не потребуючи реального PostgreSQL.
+    SessionFactory factory;
+
+    // ── Setter для тестів ────────────────────────────────────────────────────
+    void setFactory(SessionFactory factory) {
+<span class="fc" id="L23">        this.factory = factory;</span>
+<span class="fc" id="L24">    }</span>
+
+    // ── main() — лише точка входу, ініціалізує factory і делегує до run() ───
+    public static void main(String[] args) {
+        try {
+<span class="fc" id="L29">            System.setOut(new PrintStream(System.out, true, &quot;Cp866&quot;));</span>
+<span class="fc" id="L30">            System.setErr(new PrintStream(System.err, true, &quot;Cp866&quot;));</span>
+<span class="nc" id="L31">        } catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L32">            System.err.println(&quot;Encoding error: &quot; + e.getMessage());</span>
+<span class="fc" id="L33">        }</span>
+
+<span class="fc" id="L35">        MainApp app = new MainApp();</span>
+        try {
+<span class="fc" id="L37">            app.factory = new Configuration()</span>
+<span class="nc" id="L38">                    .configure(&quot;hibernate.cfg.xml&quot;)</span>
+<span class="nc" id="L39">                    .addAnnotatedClass(Owner.class)</span>
+<span class="nc" id="L40">                    .addAnnotatedClass(Veterinarian.class)</span>
+<span class="nc" id="L41">                    .addAnnotatedClass(Pet.class)</span>
+<span class="nc" id="L42">                    .addAnnotatedClass(Appointment.class)</span>
+<span class="nc" id="L43">                    .buildSessionFactory();</span>
+
+<span class="nc" id="L45">            app.run();</span>
+
+<span class="fc" id="L47">        } catch (Exception e) {</span>
+<span class="fc" id="L48">            System.err.println(&quot;Критична помилка ініціалізації: &quot; + e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">            if (app.factory != null) {</span>
+<span class="nc" id="L51">                app.factory.close();</span>
+            }
+        }
+<span class="fc" id="L54">    }</span>
+
+    // ── run() — логіка меню, використовує this.factory ──────────────────────
+    public void run() {
+<span class="fc" id="L58">        Scanner scanner = new Scanner(System.in);</span>
+<span class="fc" id="L59">        boolean running = true;</span>
+
+<span class="fc" id="L61">        System.out.println(&quot;&gt;&gt;&gt; Програма 'Ветеринарна клініка' запущена.&quot;);</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        while (running) {</span>
+<span class="fc" id="L64">            printMenu();</span>
+<span class="fc" id="L65">            System.out.print(&quot;Ваш вибір: &quot;);</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (!scanner.hasNextLine()) {</span>
+<span class="fc" id="L68">                break;</span>
+            }
+
+<span class="fc" id="L71">            String input = scanner.nextLine();</span>
+
+<span class="fc bfc" id="L73" title="All 5 branches covered.">            switch (input) {</span>
+                case &quot;1&quot;:
+<span class="fc" id="L75">                    loadTestData();</span>
+<span class="fc" id="L76">                    break;</span>
+                case &quot;2&quot;:
+<span class="fc" id="L78">                    showReport();</span>
+<span class="fc" id="L79">                    break;</span>
+                case &quot;3&quot;:
+<span class="fc" id="L81">                    clearDatabase();</span>
+<span class="fc" id="L82">                    break;</span>
+                case &quot;4&quot;:
+<span class="fc" id="L84">                    System.out.println(&quot;&gt;&gt;&gt; Завершення роботи...&quot;);</span>
+<span class="fc" id="L85">                    running = false;</span>
+<span class="fc" id="L86">                    break;</span>
+                default:
+<span class="fc" id="L88">                    System.out.println(&quot;!!! Невідома команда, спробуйте ще раз.&quot;);</span>
+            }
+<span class="fc" id="L90">        }</span>
+<span class="fc" id="L91">        scanner.close();</span>
+<span class="fc" id="L92">    }</span>
+
+    // ── printMenu() — окремий метод, щоб JaCoCo бачив його покритим ─────────
+    void printMenu() {
+<span class="fc" id="L96">        System.out.println(&quot;\n-------------------------------------------&quot;);</span>
+<span class="fc" id="L97">        System.out.println(&quot; МЕНЮ УПРАВЛІННЯ:&quot;);</span>
+<span class="fc" id="L98">        System.out.println(&quot; 1. Наповнити базу тестовими даними&quot;);</span>
+<span class="fc" id="L99">        System.out.println(&quot; 2. Переглянути звіт прийомів&quot;);</span>
+<span class="fc" id="L100">        System.out.println(&quot; 3. Видалити всі дані&quot;);</span>
+<span class="fc" id="L101">        System.out.println(&quot; 4. Вихід&quot;);</span>
+<span class="fc" id="L102">        System.out.println(&quot;-------------------------------------------&quot;);</span>
+<span class="fc" id="L103">    }</span>
+
+    // ── loadTestData() — тепер instance-метод ────────────────────────────────
+    void loadTestData() {
+<span class="fc" id="L107">        try (Session session = factory.openSession()) {</span>
+<span class="fc" id="L108">            Transaction tx = session.beginTransaction();</span>
+<span class="fc" id="L109">            System.out.println(&quot;&gt;&gt;&gt; Завантаження офіційних даних...&quot;);</span>
+
+<span class="fc" id="L111">            Veterinarian v1 = new Veterinarian(&quot;Петренко Ірина Василівна&quot;, 10);</span>
+<span class="fc" id="L112">            Veterinarian v2 = new Veterinarian(&quot;Іваненко Андрій Миколайович&quot;, 8);</span>
+<span class="fc" id="L113">            Veterinarian v3 = new Veterinarian(&quot;Мельник Оксана Петрівна&quot;, 12);</span>
+<span class="fc" id="L114">            session.persist(v1);</span>
+<span class="fc" id="L115">            session.persist(v2);</span>
+<span class="fc" id="L116">            session.persist(v3);</span>
+
+<span class="fc" id="L118">            Owner o1 = new Owner(&quot;Коваленко&quot;, &quot;Олег&quot;, &quot;Іванович&quot;, &quot;м. Київ&quot;, &quot;Шевченка&quot;, &quot;12&quot;, &quot;5&quot;, &quot;380501111111&quot;);</span>
+<span class="fc" id="L119">            Pet p1 = new Pet(o1, &quot;Барсік&quot;, &quot;кіт&quot;);</span>
+<span class="fc" id="L120">            session.persist(o1); session.persist(p1);</span>
+<span class="fc" id="L121">            session.persist(new Appointment(p1, v1, LocalDate.parse(&quot;2024-09-14&quot;), LocalTime.parse(&quot;10:00:00&quot;), &quot;Комплексне щеплення, огляд&quot;, true));</span>
+
+<span class="fc" id="L123">            Owner o2 = new Owner(&quot;Сидоренко&quot;, &quot;Марія&quot;, &quot;Олексіївна&quot;, &quot;м. Київ&quot;, &quot;Лесі Українки&quot;, &quot;5&quot;, null, &quot;380502222222&quot;);</span>
+<span class="fc" id="L124">            Pet p2 = new Pet(o2, &quot;Рекс&quot;, &quot;собака&quot;);</span>
+<span class="fc" id="L125">            session.persist(o2); session.persist(p2);</span>
+<span class="fc" id="L126">            session.persist(new Appointment(p2, v1, LocalDate.parse(&quot;2024-09-14&quot;), LocalTime.parse(&quot;11:30:00&quot;), &quot;Щеплення від сказу&quot;, true));</span>
+
+<span class="fc" id="L128">            Owner o3 = new Owner(&quot;Бондаренко&quot;, &quot;Дмитро&quot;, &quot;Сергійович&quot;, &quot;м. Київ&quot;, &quot;просп. Перемоги&quot;, &quot;33&quot;, null, &quot;380503333333&quot;);</span>
+<span class="fc" id="L129">            Pet p3 = new Pet(o3, &quot;Муся&quot;, &quot;кішка&quot;);</span>
+<span class="fc" id="L130">            session.persist(o3); session.persist(p3);</span>
+<span class="fc" id="L131">            session.persist(new Appointment(p3, v2, LocalDate.parse(&quot;2024-09-14&quot;), LocalTime.parse(&quot;14:20:00&quot;), &quot;Огляд після операції&quot;, false));</span>
+
+<span class="fc" id="L133">            Owner o4 = new Owner(&quot;Ткаченко&quot;, &quot;Оля&quot;, &quot;Ігорівна&quot;, &quot;м. Київ&quot;, &quot;Хрещатик&quot;, &quot;25&quot;, null, &quot;380504444444&quot;);</span>
+<span class="fc" id="L134">            Pet p4 = new Pet(o4, &quot;Джек&quot;, &quot;собака&quot;);</span>
+<span class="fc" id="L135">            session.persist(o4); session.persist(p4);</span>
+<span class="fc" id="L136">            session.persist(new Appointment(p4, v3, LocalDate.parse(&quot;2024-09-14&quot;), LocalTime.parse(&quot;15:10:00&quot;), &quot;Чищення зубів&quot;, false));</span>
+
+<span class="fc" id="L138">            Owner o5 = new Owner(&quot;Коваленко&quot;, &quot;Сергій&quot;, &quot;Володимирович&quot;, &quot;м. Київ&quot;, &quot;Саксаганського&quot;, &quot;7&quot;, null, &quot;380505555555&quot;);</span>
+<span class="fc" id="L139">            Pet p5 = new Pet(o5, &quot;Зоря&quot;, &quot;кішка&quot;);</span>
+<span class="fc" id="L140">            session.persist(o5); session.persist(p5);</span>
+<span class="fc" id="L141">            session.persist(new Appointment(p5, v3, LocalDate.parse(&quot;2024-09-15&quot;), LocalTime.parse(&quot;09:15:00&quot;), &quot;Лікування захворювання шкіри&quot;, false));</span>
+
+<span class="fc" id="L143">            Owner o6 = new Owner(&quot;Марченко&quot;, &quot;Ірина&quot;, &quot;Олегівна&quot;, &quot;м. Київ&quot;, &quot;Богдана Хмельницького&quot;, &quot;10&quot;, null, &quot;380506666666&quot;);</span>
+<span class="fc" id="L144">            Pet p6 = new Pet(o6, &quot;Буч&quot;, &quot;собака&quot;);</span>
+<span class="fc" id="L145">            session.persist(o6); session.persist(p6);</span>
+<span class="fc" id="L146">            session.persist(new Appointment(p6, v3, LocalDate.parse(&quot;2024-09-15&quot;), LocalTime.parse(&quot;11:00:00&quot;), &quot;Комплексне щеплення, огляд&quot;, true));</span>
+
+<span class="fc" id="L148">            Owner o7 = new Owner(&quot;Шевчук&quot;, &quot;Павло&quot;, &quot;Миколайович&quot;, &quot;м. Київ&quot;, &quot;Антоновича&quot;, &quot;72&quot;, null, &quot;380507777777&quot;);</span>
+<span class="fc" id="L149">            Pet p7 = new Pet(o7, &quot;Сімба&quot;, &quot;кіт&quot;);</span>
+<span class="fc" id="L150">            session.persist(o7); session.persist(p7);</span>
+<span class="fc" id="L151">            session.persist(new Appointment(p7, v1, LocalDate.parse(&quot;2024-09-15&quot;), LocalTime.parse(&quot;14:45:00&quot;), &quot;Кастрація&quot;, false));</span>
+
+<span class="fc" id="L153">            Owner o8 = new Owner(&quot;Гончарук&quot;, &quot;Наталія&quot;, &quot;Вікторівна&quot;, &quot;м. Київ&quot;, &quot;Велика Васильківська&quot;, &quot;7&quot;, null, &quot;380508888888&quot;);</span>
+<span class="fc" id="L154">            Pet p8 = new Pet(o8, &quot;Лапа&quot;, &quot;собака&quot;);</span>
+<span class="fc" id="L155">            session.persist(o8); session.persist(p8);</span>
+<span class="fc" id="L156">            session.persist(new Appointment(p8, v2, LocalDate.parse(&quot;2024-09-16&quot;), LocalTime.parse(&quot;10:30:00&quot;), &quot;Щеплення від сказу&quot;, true));</span>
+
+<span class="fc" id="L158">            Owner o9 = new Owner(&quot;Лисенко&quot;, &quot;Артем&quot;, &quot;Олексійович&quot;, &quot;м. Київ&quot;, &quot;Дегтярівська&quot;, &quot;33&quot;, null, &quot;380509999999&quot;);</span>
+<span class="fc" id="L159">            Pet p9 = new Pet(o9, &quot;Мурка&quot;, &quot;кішка&quot;);</span>
+<span class="fc" id="L160">            session.persist(o9); session.persist(p9);</span>
+<span class="fc" id="L161">            session.persist(new Appointment(p9, v3, LocalDate.parse(&quot;2024-09-16&quot;), LocalTime.parse(&quot;12:15:00&quot;), &quot;Лікування кон'юнктивіту&quot;, false));</span>
+
+<span class="fc" id="L163">            Owner o10 = new Owner(&quot;Павленко&quot;, &quot;Катерина&quot;, &quot;Сергіївна&quot;, &quot;м. Київ&quot;, &quot;Олени Теліги&quot;, &quot;18&quot;, null, &quot;380501010101&quot;);</span>
+<span class="fc" id="L164">            Pet p10 = new Pet(o10, &quot;Тедді&quot;, &quot;собака&quot;);</span>
+<span class="fc" id="L165">            session.persist(o10); session.persist(p10);</span>
+<span class="fc" id="L166">            session.persist(new Appointment(p10, v1, LocalDate.parse(&quot;2024-09-16&quot;), LocalTime.parse(&quot;15:00:00&quot;), &quot;Комплексне щеплення, огляд&quot;, true));</span>
+
+<span class="fc" id="L168">            Owner o11 = new Owner(&quot;Ковальчук&quot;, &quot;Михайло&quot;, &quot;Іванович&quot;, &quot;м. Київ&quot;, &quot;Дорогожицька&quot;, &quot;2&quot;, null, &quot;380501112131&quot;);</span>
+<span class="fc" id="L169">            Pet p11 = new Pet(o11, &quot;Річ&quot;, &quot;кіт&quot;);</span>
+<span class="fc" id="L170">            session.persist(o11); session.persist(p11);</span>
+<span class="fc" id="L171">            session.persist(new Appointment(p11, v2, LocalDate.parse(&quot;2024-09-17&quot;), LocalTime.parse(&quot;09:45:00&quot;), &quot;Огляд після лікування&quot;, false));</span>
+
+<span class="fc" id="L173">            session.persist(new Appointment(p3, v3, LocalDate.parse(&quot;2024-09-17&quot;), LocalTime.parse(&quot;13:30:00&quot;), &quot;Комплексне щеплення, огляд&quot;, true));</span>
+
+<span class="fc" id="L175">            tx.commit();</span>
+<span class="fc" id="L176">            System.out.println(&quot;&gt;&gt;&gt; Дані про запис успішно додано!&quot;);</span>
+<span class="nc" id="L177">        } catch (Exception e) {</span>
+<span class="nc" id="L178">            System.err.println(&quot;Помилка при додаванні даних: &quot; + e.getMessage());</span>
+<span class="fc" id="L179">        }</span>
+<span class="fc" id="L180">    }</span>
+
+    // ── showReport() — тепер instance-метод ──────────────────────────────────
+    void showReport() {
+<span class="fc" id="L184">        try (Session session = factory.openSession()) {</span>
+<span class="fc" id="L185">            session.beginTransaction();</span>
+
+<span class="fc" id="L187">            String hql = &quot;SELECT new com.veterinary.AppointmentInfoDTO(&quot;</span>
+                    + &quot;a.appointmentDate, a.appointmentTime, &quot;
+                    + &quot;o.lastName, o.firstName, o.middleName, o.phone, &quot;
+                    + &quot;o.city, o.street, o.house, o.apartment, &quot;
+                    + &quot;p.name, p.species, v.fullName, v.experienceYears, &quot;
+                    + &quot;a.diagnosisTreatment, a.isVaccinated) &quot;
+                    + &quot;FROM Appointment a &quot;
+                    + &quot;JOIN a.pet p JOIN p.owner o JOIN a.veterinarian v &quot;
+                    + &quot;ORDER BY a.appointmentDate, a.appointmentTime&quot;;
+
+<span class="fc" id="L197">            List&lt;AppointmentInfoDTO&gt; results = session.createQuery(hql,</span>
+<span class="fc" id="L198">                    AppointmentInfoDTO.class).getResultList();</span>
+
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            if (results.isEmpty()) {</span>
+<span class="fc" id="L201">                System.out.println(&quot;!!! Увага: База даних порожня.&quot;);</span>
+            } else {
+<span class="fc" id="L203">                String line = new String(new char[115]).replace('\0', '-');</span>
+<span class="fc" id="L204">                System.out.println(&quot;\n&quot; + line);</span>
+<span class="fc" id="L205">                String headerFormat = &quot;| %-25s | %-15s | %-25s | %-12s | %-5s |\n&quot;;</span>
+<span class="fc" id="L206">                System.out.printf(headerFormat, &quot;Власник&quot;, &quot;Тварина&quot;, &quot;Ветеринар&quot;, &quot;Дата&quot;, &quot;Час&quot;);</span>
+<span class="fc" id="L207">                System.out.println(line);</span>
+
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                for (AppointmentInfoDTO info : results) {</span>
+<span class="fc" id="L210">                    System.out.println(info.toString());</span>
+<span class="fc" id="L211">                }</span>
+<span class="fc" id="L212">                System.out.println(line + &quot;\n&quot;);</span>
+            }
+<span class="fc" id="L214">            session.getTransaction().commit();</span>
+<span class="nc" id="L215">        } catch (Exception e) {</span>
+<span class="nc" id="L216">            System.err.println(&quot;Помилка при формуванні звіту: &quot; + e.getMessage());</span>
+<span class="fc" id="L217">        }</span>
+<span class="fc" id="L218">    }</span>
+
+    // ── clearDatabase() — тепер instance-метод ───────────────────────────────
+    void clearDatabase() {
+<span class="fc" id="L222">        try (Session session = factory.openSession()) {</span>
+<span class="fc" id="L223">            Transaction tx = session.beginTransaction();</span>
+<span class="fc" id="L224">            System.out.println(&quot;&gt;&gt;&gt; Очищення бази даних...&quot;);</span>
+
+<span class="fc" id="L226">            session.createQuery(&quot;DELETE FROM Appointment&quot;).executeUpdate();</span>
+<span class="fc" id="L227">            session.createQuery(&quot;DELETE FROM Pet&quot;).executeUpdate();</span>
+<span class="fc" id="L228">            session.createQuery(&quot;DELETE FROM Owner&quot;).executeUpdate();</span>
+<span class="fc" id="L229">            session.createQuery(&quot;DELETE FROM Veterinarian&quot;).executeUpdate();</span>
+
+<span class="fc" id="L231">            tx.commit();</span>
+<span class="fc" id="L232">            System.out.println(&quot;&gt;&gt;&gt; База даних повністю очищена!&quot;);</span>
+<span class="nc" id="L233">        } catch (Exception e) {</span>
+<span class="nc" id="L234">            System.err.println(&quot;Помилка при очищенні: &quot; + e.getMessage());</span>
+<span class="fc" id="L235">        }</span>
+<span class="fc" id="L236">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
