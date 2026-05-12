@@ -71,6 +71,7 @@ public class AppointmentInfoDTO {
     public String getOwnerCity() { 
         return ownerCity; 
     }
+    
     public String getCity() { 
         return ownerCity; 
     } 
@@ -119,11 +120,11 @@ public class AppointmentInfoDTO {
         return diagnosis; 
     }
 
-    public boolean isVaccinated() { 
-        return isVaccinated; 
+    public boolean isVaccinated() {
+        return isVaccinated;
     }
-    
-    @Override
+
+    @Override 
     public String toString() {
         return String.format("| %-25s | %-15s | %-25s | %-12s | %-5s |",
                 ownerLastName + " " + (ownerFirstName != null ? ownerFirstName.substring(0, 1) + "." : ""),
