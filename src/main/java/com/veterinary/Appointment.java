@@ -43,7 +43,9 @@ public class Appointment {
 
     public Appointment() {}
 
-    public Appointment(Pet pet, Veterinarian veterinarian, LocalDate appointmentDate, LocalTime appointmentTime, String diagnosisTreatment, Boolean isVaccinated) {
+    public Appointment(Pet pet, Veterinarian veterinarian, 
+                       LocalDate appointmentDate, LocalTime appointmentTime, 
+                       String diagnosisTreatment, Boolean isVaccinated) {
         this.pet = pet;
         this.veterinarian = veterinarian;
         this.appointmentDate = appointmentDate;

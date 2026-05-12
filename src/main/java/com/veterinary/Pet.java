@@ -37,7 +37,15 @@ public class Pet {
     }
 
     public String getName() { 
-        return name; }
-    public String getSpecies() { return species; }
-    public Owner getOwner() { return owner; }
+        return name; 
+    }
+
+    public String getSpecies() { 
+        return species; 
+    }
+
+    public Owner getOwner() { 
+        return owner; 
+    }
+    
 }

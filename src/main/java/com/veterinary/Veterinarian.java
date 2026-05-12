@@ -28,6 +28,12 @@ public class Veterinarian {
         this.experienceYears = experienceYears;
     }
 
-    public String getFullName() { return fullName; }
-    public Integer getExperienceYears() { return experienceYears; }
+    public String getFullName() { 
+        return fullName; 
+    }
+
+    public Integer getExperienceYears() { 
+        return experienceYears; 
+    }
+    
 }

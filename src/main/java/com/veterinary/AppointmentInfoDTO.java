@@ -21,6 +21,7 @@ public class AppointmentInfoDTO {
     private String diagnosis;
     private Boolean isVaccinated;
 
+    // Конструктор повинен приймати ті ж типи, що й поля вище
     public AppointmentInfoDTO(LocalDate date, LocalTime time, String lastName, 
                               String firstName, String middleName, String phone, 
                               String city, String street, String house, 
