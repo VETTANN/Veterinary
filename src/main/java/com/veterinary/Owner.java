@@ -53,25 +53,77 @@ public class Owner {
         this.phone = phone;
     }
 
-    public Integer getOwnerId() { return ownerId; }
-    public String getLastName() { return lastName; }
-    public String getFirstName() { return firstName; }
-    public String getMiddleName() { return middleName; }
-    public String getCity() { return city; }
-    public String getStreet() { return street; }
-    public String getHouse() { return house; }
-    public String getApartment() { return apartment; }
-    public String getPhone() { return phone; }
+    public Integer getOwnerId() { 
+        return ownerId; 
+    }
+
+    public String getLastName() { 
+        return lastName; 
+    }
+
+    public String getFirstName() { 
+        return firstName; 
+    }
+
+    public String getMiddleName() { 
+        return middleName; 
+    }
+
+    public String getCity() { 
+        return city; 
+    }
+
+    public String getStreet() { 
+        return street; 
+    }
+
+    public String getHouse() { 
+        return house; 
+    }
+
+    public String getApartment() { 
+        return apartment; 
+    }
+
+    public String getPhone() { 
+        return phone; 
+    }
+
+    public void setOwnerId(Integer ownerId) { 
+        this.ownerId = ownerId; 
+    }
+
+    public void setLastName(String lastName) { 
+        this.lastName = lastName; 
+    }
+
+    public void setFirstName(String firstName) { 
+        this.firstName = firstName; 
+    }
+
+    public void setMiddleName(String middleName) { 
+        this.middleName = middleName; 
+    }
     
-    public void setOwnerId(Integer ownerId) { this.ownerId = ownerId; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setMiddleName(String middleName) { this.middleName = middleName; }
-    public void setCity(String city) { this.city = city; }
-    public void setStreet(String street) { this.street = street; }
-    public void setHouse(String house) { this.house = house; }
-    public void setApartment(String apartment) { this.apartment = apartment; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setCity(String city) { 
+        this.city = city; 
+    }
+
+    public void setStreet(String street) { 
+        this.street = street; 
+    }
+
+    public void setHouse(String house) { 
+        this.house = house; 
+    }
+
+    public void setApartment(String apartment) { 
+        this.apartment = apartment; 
+    }
+
+    public void setPhone(String phone) { 
+        this.phone = phone; 
+    }
 
     @Override
     public String toString() {

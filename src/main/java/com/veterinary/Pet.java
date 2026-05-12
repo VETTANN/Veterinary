@@ -36,13 +36,33 @@ public class Pet {
         this.species = species;
     }
 
-    public Integer getPetId() { return petId; }
-    public String getName() { return name; }
-    public String getSpecies() { return species; }
-    public Owner getOwner() { return owner; }
-    public void setName(String name) { this.name = name; }
-    public void setSpecies(String species) { this.species = species; }
-    public void setOwner(Owner owner) { this.owner = owner; }
+    public Integer getPetId() { 
+        return petId; 
+    }
+
+    public String getName() { 
+        return name; 
+    }
+
+    public String getSpecies() { 
+        return species; 
+    }
+
+    public Owner getOwner() { 
+        return owner; 
+    }
+
+    public void setName(String name) { 
+        this.name = name; 
+    }
+
+    public void setSpecies(String species) { 
+        this.species = species; 
+    }
+
+    public void setOwner(Owner owner) { 
+        this.owner = owner; 
+    }
 
     @Override
 public String toString() {

@@ -30,7 +30,8 @@ public class Appointment {
     private String diagnosisTreatment;
     private boolean isVaccinated;
 
-    public Appointment() {}
+    public Appointment() {
+    }
 
     public Appointment(Pet pet, Veterinarian veterinarian, LocalDate appointmentDate, 
                        LocalTime appointmentTime, String diagnosisTreatment, boolean isVaccinated) {
@@ -42,38 +43,59 @@ public class Appointment {
         this.isVaccinated = isVaccinated;
     }
 
-    // --- Геттери ---
-    public Integer getId() { return id; }
-    public Pet getPet() { return pet; }
-    public Veterinarian getVeterinarian() { return veterinarian; }
-    public LocalDate getAppointmentDate() { return appointmentDate; }
-    public LocalTime getAppointmentTime() { return appointmentTime; }
-    public String getDiagnosisTreatment() { return diagnosisTreatment; }
-    public boolean isVaccinated() { return isVaccinated; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
-    
-    public void setPet(Pet pet) { this.pet = pet; }
-    
-    public void setVeterinarian(Veterinarian veterinarian) { this.veterinarian = veterinarian; }
-    
-    public void setAppointmentDate(LocalDate appointmentDate) { this.appointmentDate = appointmentDate; }
-    
-    public void setAppointmentTime(LocalTime appointmentTime) { this.appointmentTime = appointmentTime; }
-    
-    public void setDiagnosisTreatment(String diagnosisTreatment) { this.diagnosisTreatment = diagnosisTreatment; }
-    
-    public void setVaccinated(boolean vaccinated) { this.isVaccinated = vaccinated; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", pet=" + (pet != null ? pet.getName() : "null") +
-                ", date=" + appointmentDate +
-                ", time=" + appointmentTime +
-                ", diagnosis='" + diagnosisTreatment + '\'' +
-                ", vaccinated=" + isVaccinated +
-                '}';
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Veterinarian getVeterinarian() {
+        return veterinarian;
+    }
+
+    public void setVeterinarian(Veterinarian veterinarian) {
+        this.veterinarian = veterinarian;
+    }
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public LocalTime getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public void setAppointmentTime(LocalTime appointmentTime) {
+        this.appointmentTime = appointmentTime;
+    }
+
+    public String getDiagnosisTreatment() {
+        return diagnosisTreatment;
+    }
+
+    public void setDiagnosisTreatment(String diagnosisTreatment) {
+        this.diagnosisTreatment = diagnosisTreatment;
+    }
+
+    public boolean isVaccinated() {
+        return isVaccinated;
+    }
+
+    public void setVaccinated(boolean vaccinated) {
+        this.isVaccinated = vaccinated;
     }
 }

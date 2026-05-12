@@ -44,32 +44,85 @@ public class AppointmentInfoDTO {
         this.isVaccinated = isVaccinated;
     }
     
-    public LocalDate getAppointmentDate() { return appointmentDate; }
-    public LocalTime getAppointmentTime() { return appointmentTime; }
-    public String getOwnerLastName() { return ownerLastName; }
-    public String getOwnerFirstName() { return ownerFirstName; }
-    public String getOwnerMiddleName() { return ownerMiddleName; }
-    public String getOwnerPhone() { return ownerPhone; }
-    
-    public String getOwnerCity() { return ownerCity; }
-    public String getCity() { return ownerCity; } // Аліас для тесту
-    
-    public String getOwnerStreet() { return ownerStreet; }
-    public String getStreet() { return ownerStreet; } // Аліас для тесту
-    
-    public String getOwnerHouse() { return ownerHouse; }
-    public String getHouse() { return ownerHouse; } // Аліас для тесту
-    
-    public String getOwnerApartment() { return ownerApartment; }
-    public String getApartment() { return ownerApartment; } // Аліас для тесту
+    public LocalDate getAppointmentDate() { 
+        return appointmentDate; 
+    }
 
-    public String getPetName() { return petName; }
-    public String getPetSpecies() { return petSpecies; }
-    public String getVetFullName() { return vetFullName; }
-    public int getVetExperience() { return vetExperience; }
-    public String getDiagnosis() { return diagnosis; }
-    public boolean isVaccinated() { return isVaccinated; }
+    public LocalTime getAppointmentTime() { 
+        return appointmentTime; 
+    }
 
+    public String getOwnerLastName() { 
+        return ownerLastName; 
+    }
+
+    public String getOwnerFirstName() { 
+        return ownerFirstName; 
+    }
+
+    public String getOwnerMiddleName() { 
+        return ownerMiddleName; 
+    }
+
+    public String getOwnerPhone() { 
+        return ownerPhone; 
+    }
+    
+    public String getOwnerCity() { 
+        return ownerCity; 
+    }
+    public String getCity() { 
+        return ownerCity; 
+    } 
+    
+    public String getOwnerStreet() { 
+        return ownerStreet; 
+    }
+
+    public String getStreet() { 
+        return ownerStreet; 
+    } 
+    
+    public String getOwnerHouse() { 
+        return ownerHouse; 
+    }
+
+    public String getHouse() { 
+        return ownerHouse; 
+    } 
+    
+    public String getOwnerApartment() { 
+        return ownerApartment; 
+    }
+
+    public String getApartment() { 
+        return ownerApartment; 
+    }
+
+    public String getPetName() { 
+        return petName; 
+    }
+
+    public String getPetSpecies() { 
+        return petSpecies; 
+    }
+
+    public String getVetFullName() { 
+        return vetFullName; 
+    }
+
+    public int getVetExperience() { 
+        return vetExperience; 
+    }
+
+    public String getDiagnosis() { 
+        return diagnosis; 
+    }
+
+    public boolean isVaccinated() { 
+        return isVaccinated; 
+    }
+    
     @Override
     public String toString() {
         return String.format("| %-25s | %-15s | %-25s | %-12s | %-5s |",
