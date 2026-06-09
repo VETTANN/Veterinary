@@ -34,8 +34,8 @@ public class MainApp {
             System.err.println("Помилка кодування: " + e.getMessage());
         }
 
-        // Рядок підключення записаний в один суцільний рядок без розривів
-        String uri = "mongodb+srv://yonimonigm_db_user:hZVNgo3zuURKjM3H@veterinary.5nopo6y.mongodb.net/Veterinary?retryWrites=true&w=majority";
+        String uri = "mongodb+srv://yonimonigm_db_user:hZVNgo3zuURKjM3H"
+                + "@veterinary.5nopo6y.mongodb.net/Veterinary?retryWrites=true&w=majority";
 
         try {
             mongoClient = MongoClients.create(uri);
