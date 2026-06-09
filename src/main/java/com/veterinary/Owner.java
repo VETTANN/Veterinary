@@ -15,18 +15,29 @@ public class Owner {
     @Column(name = "owner_id")
     private Integer ownerId;
 
-    // ПІБ (Окремі колонки для бази)
-    @Column(name = "last_name") private String lastName;
-    @Column(name = "first_name") private String firstName;
-    @Column(name = "middle_name") private String middleName;
+    @Column(name = "last_name") 
+    private String lastName;
 
-    // Адреса (Окремі колонки для бази)
-    @Column(name = "city") private String city;
-    @Column(name = "street") private String street;
-    @Column(name = "house") private String house;
-    @Column(name = "apartment") private String apartment;
+    @Column(name = "first_name") 
+    private String firstName;
 
-    @Column(name = "phone", unique = true) private String phone;
+    @Column(name = "middle_name") 
+    private String middleName;
+
+    @Column(name = "city") 
+    private String city;
+
+    @Column(name = "street") 
+    private String street;
+
+    @Column(name = "house") 
+    private String house;
+
+    @Column(name = "apartment") 
+    private String apartment;
+
+    @Column(name = "phone", unique = true) 
+    private String phone;
 
     public Owner() {}
 
@@ -40,5 +51,82 @@ public class Owner {
         this.house = house;
         this.apartment = apartment;
         this.phone = phone;
+    }
+
+    public Integer getOwnerId() { 
+        return ownerId; 
+    }
+
+    public String getLastName() { 
+        return lastName; 
+    }
+
+    public String getFirstName() { 
+        return firstName; 
+    }
+
+    public String getMiddleName() { 
+        return middleName; 
+    }
+
+    public String getCity() { 
+        return city; 
+    }
+
+    public String getStreet() { 
+        return street; 
+    }
+
+    public String getHouse() { 
+        return house; 
+    }
+
+    public String getApartment() { 
+        return apartment; 
+    }
+
+    public String getPhone() { 
+        return phone; 
+    }
+
+    public void setOwnerId(Integer ownerId) { 
+        this.ownerId = ownerId; 
+    }
+
+    public void setLastName(String lastName) { 
+        this.lastName = lastName; 
+    }
+
+    public void setFirstName(String firstName) { 
+        this.firstName = firstName; 
+    }
+
+    public void setMiddleName(String middleName) { 
+        this.middleName = middleName; 
+    }
+    
+    public void setCity(String city) { 
+        this.city = city; 
+    }
+
+    public void setStreet(String street) { 
+        this.street = street; 
+    }
+
+    public void setHouse(String house) { 
+        this.house = house; 
+    }
+
+    public void setApartment(String apartment) { 
+        this.apartment = apartment; 
+    }
+
+    public void setPhone(String phone) { 
+        this.phone = phone; 
+    }
+
+    @Override
+    public String toString() {
+        return lastName + " " + firstName + " " + middleName;
     }
 }

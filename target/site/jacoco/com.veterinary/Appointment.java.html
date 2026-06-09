@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="uk"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Appointment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Veterinary-Project</a> &gt; <a href="index.source.html" class="el_package">com.veterinary</a> &gt; <span class="el_source">Appointment.java</span></div><h1>Appointment.java</h1><pre class="source lang-java linenums">package com.veterinary;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = &quot;appointment&quot;)
+public class Appointment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;pet_id&quot;)
+    private Pet pet;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;vet_id&quot;)
+    private Veterinarian veterinarian;
+
+    private LocalDate appointmentDate;
+    private LocalTime appointmentTime;
+    private String diagnosisTreatment;
+    private boolean isVaccinated;
+
+<span class="fc" id="L33">    public Appointment() {}</span>
+
+    public Appointment(Pet pet, Veterinarian veterinarian, LocalDate appointmentDate, 
+<span class="fc" id="L36">                       LocalTime appointmentTime, String diagnosisTreatment, boolean isVaccinated) {</span>
+<span class="fc" id="L37">        this.pet = pet;</span>
+<span class="fc" id="L38">        this.veterinarian = veterinarian;</span>
+<span class="fc" id="L39">        this.appointmentDate = appointmentDate;</span>
+<span class="fc" id="L40">        this.appointmentTime = appointmentTime;</span>
+<span class="fc" id="L41">        this.diagnosisTreatment = diagnosisTreatment;</span>
+<span class="fc" id="L42">        this.isVaccinated = isVaccinated;</span>
+<span class="fc" id="L43">    }</span>
+
+    // --- Геттери ---
+<span class="fc" id="L46">    public Integer getId() { return id; }</span>
+<span class="fc" id="L47">    public Pet getPet() { return pet; }</span>
+<span class="fc" id="L48">    public Veterinarian getVeterinarian() { return veterinarian; }</span>
+<span class="fc" id="L49">    public LocalDate getAppointmentDate() { return appointmentDate; }</span>
+<span class="fc" id="L50">    public LocalTime getAppointmentTime() { return appointmentTime; }</span>
+<span class="fc" id="L51">    public String getDiagnosisTreatment() { return diagnosisTreatment; }</span>
+<span class="fc" id="L52">    public boolean isVaccinated() { return isVaccinated; }</span>
+
+    // --- Сетери (Додано для виправлення помилок у тестах та росту JaCoCo) ---
+<span class="fc" id="L55">    public void setId(Integer id) { this.id = id; }</span>
+    
+<span class="fc" id="L57">    public void setPet(Pet pet) { this.pet = pet; }</span>
+    
+<span class="fc" id="L59">    public void setVeterinarian(Veterinarian veterinarian) { this.veterinarian = veterinarian; }</span>
+    
+<span class="fc" id="L61">    public void setAppointmentDate(LocalDate appointmentDate) { this.appointmentDate = appointmentDate; }</span>
+    
+<span class="fc" id="L63">    public void setAppointmentTime(LocalTime appointmentTime) { this.appointmentTime = appointmentTime; }</span>
+    
+<span class="fc" id="L65">    public void setDiagnosisTreatment(String diagnosisTreatment) { this.diagnosisTreatment = diagnosisTreatment; }</span>
+    
+<span class="fc" id="L67">    public void setVaccinated(boolean vaccinated) { this.isVaccinated = vaccinated; }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L71">        return &quot;Appointment{&quot; +</span>
+                &quot;id=&quot; + id +
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                &quot;, pet=&quot; + (pet != null ? pet.getName() : &quot;null&quot;) +</span>
+                &quot;, date=&quot; + appointmentDate +
+                &quot;, time=&quot; + appointmentTime +
+                &quot;, diagnosis='&quot; + diagnosisTreatment + '\'' +
+                &quot;, vaccinated=&quot; + isVaccinated +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

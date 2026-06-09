@@ -1,6 +1,5 @@
 package com.veterinary;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,28 +11,32 @@ import javax.persistence.Table;
 public class Veterinarian {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vet_id")
-    private Integer vetId;
+    private Integer id;
 
-    @Column(name = "full_name", nullable = false)
     private String fullName;
+    private int experienceYears;
 
-    @Column(name = "experience_years")
-    private Integer experienceYears;
+    public Veterinarian() {
+    }
 
-    public Veterinarian() {}
-
-    public Veterinarian(String fullName, Integer experienceYears) {
+    public Veterinarian(String fullName, int experienceYears) {
         this.fullName = fullName;
         this.experienceYears = experienceYears;
     }
 
-    public String getFullName() { 
-        return fullName; 
+    public String getFullName() {
+        return fullName;
     }
 
-    public Integer getExperienceYears() { 
-        return experienceYears; 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
-    
+
+    public int getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(int experienceYears) {
+        this.experienceYears = experienceYears;
+    }
 }
