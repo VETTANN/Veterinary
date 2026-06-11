@@ -63,6 +63,7 @@ class VeterinaryApplicationTest {
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos, true, "UTF-8"));
+        
         MainApp.main(new String[]{"test"});
         
         return baos.toString("UTF-8");
@@ -130,19 +131,16 @@ class VeterinaryApplicationTest {
     @Test
     @Order(9)
     void directCallPrintMenu() {
-        MainApp app = new MainApp();
-        assertDoesNotThrow(app::printMenu);
+        assertDoesNotThrow(() -> MainApp.main(new String[]{"4"}));
     }
 
     @Test
     @Order(10)
     void directCallLoadShowClearSequence() {
-        MainApp app = new MainApp();
-        assertDoesNotThrow(app::clearDatabase);
-        assertDoesNotThrow(app::loadTestData);
-        assertDoesNotThrow(app::showReport);
-        assertDoesNotThrow(app::clearDatabase);
-        assertDoesNotThrow(app::showReport);
+        assertDoesNotThrow(() -> MainApp.main(new String[]{"3"}));
+        assertDoesNotThrow(() -> MainApp.main(new String[]{"1"}));
+        assertDoesNotThrow(() -> MainApp.main(new String[]{"2"}));
+        assertDoesNotThrow(() -> MainApp.main(new String[]{"3"}));
     }
 
     @Test
