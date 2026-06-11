@@ -1,3 +1,26 @@
+# Налаштування MONGO_URI
+
+За замовчуванням програма використовує адресу mongodb://localhost:27017/Veterinary для підключення до локальної бази даних.
+
+## Підключення до MongoDB Atlas
+
+Для підключення MongoDB Atlas потрібно записати connection string кластера в змінну середовища MONGO_URI наприклад:
+mongodb+srv://<db-username>:<db-password>@<cluster-url>/Veterinary?retryWrites=true&w=majority
+
+## Порядок налаштування:
+1. Створіть кластер у MongoDB Atlas (тариф Free).
+2. Створіть користувача бази даних у розділі Database Access і збережіть пароль.
+3. Скопіюйте connection string з кнопки Connect -> Drivers і збережіть його.
+4. Створіть базу даних Veterinary і колекцію appointments в розділі Data Explorer.
+5. Підставте в URI свої username, password і назву бази даних Veterinary та збережіть у змінній сереводаща MONGO_URI.
+6. Визначте зовнішню IP-адресу (curl -s https://api.ipify.org && echo) і додайте її в Network Access.
+
+## Приклад запуску з MongoDB Atlas
+
+Windows Command Prompt:
+```cmd
+set MONGO_URI=mongodb+srv://yonimonigm_db_user:hZVNgo3zuURKjM3H@veterinary.5nopo6y.mongodb.net/Veterinary?retryWrites=true^&w=majority
+mvn exec:java
 # РЕЗУЛЬТАТИ ВИКОНАННЯ
 ```
 PS D:\НАВЧАННЯ\Бази даних\college-schedule-app-25-postgres\college-schedule-app-25-postgres> mvn clean compile exec:java
