@@ -23,12 +23,10 @@ class VeterinaryApplicationTest {
 
     @BeforeAll
     static void initFactory() {
-        String uri = "mongodb+srv://yonimonigm_db_user:hZVNgo3zuURKjM3H"
-                + "@veterinary.5nopo6y.mongodb.net/Veterinary?retryWrites=true&w=majority";
+        String uri = "mongodb+srv://yonimonigm_db_user:hZVNgo3zuURKjM3H@veterinary.5nopo6y.mongodb.net/Veterinary?retryWrites=true&w=majority";
         testMongoClient = MongoClients.create(uri);
         MainApp.setMongoClient(testMongoClient);
     }
-
     @AfterAll
     static void closeFactory() {
         if (testMongoClient != null) {
@@ -50,9 +48,36 @@ class VeterinaryApplicationTest {
     }
 
     @Test
+    @Order(3)
+    void testLoadTestDataDoesNotThrow() {
+        assertDoesNotThrow(() -> MainApp.loadTestData());
+    }
+
+    @Test
+    @Order(4)
+    void testShowReportDoesNotThrow() {
+        assertDoesNotThrow(() -> MainApp.showReport());
+    }
+
+    @Test
+    @Order(5)
+    void testClearDatabaseDoesNotThrow() {
+        // Тестуємо очищення бази даних
+        assertDoesNotThrow(() -> MainApp.clearDatabase());
+    }
+
+    @Test
+    @Order(6)
+    void testShowReportWhenClientIsNull() {
+        MainApp.setMongoClient(null);
+        assertDoesNotThrow(() -> MainApp.showReport());
+        // Повертаємо назад клієнт для стабільності
+        MainApp.setMongoClient(testMongoClient);
+    }
+
+    @Test
     @Order(20)
     void entitiesAllGettersSettersToString() {
-        // Твій оригінальний тест для сутностей, які є в проекті
         Owner o = new Owner();
         o.setOwnerId(1);
         o.setLastName("A");

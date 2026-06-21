@@ -91,7 +91,7 @@ public class MainApp {
         System.out.println("-------------------------------------------");
     }
 
-    private static void loadTestData() {
+    public static void loadTestData() {
         try {
             System.out.println(">>> Завантаження даних в MongoDB...");
             MongoCollection<Document> collection = database.getCollection("appointments");
@@ -151,7 +151,7 @@ public class MainApp {
         }
     }
 
-    private static void showReport() {
+    public static void showReport() {
         try {
             MongoCollection<Document> collection = database.getCollection("appointments");
             long count = collection.countDocuments();
@@ -188,7 +188,7 @@ public class MainApp {
         }
     }
 
-    private static void clearDatabase() {
+    public static void clearDatabase() {
         try {
             System.out.println(">>> Очищення бази даних...");
             MongoCollection<Document> collection = database.getCollection("appointments");
