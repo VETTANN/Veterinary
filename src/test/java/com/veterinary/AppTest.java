@@ -3,58 +3,73 @@ package com.veterinary;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
 
     @Test
-    void testComprehensiveCoverage() {
-        List<AppointmentInfoDTO> appointments = new ArrayList<>();
+    void testComprehensiveDomainAndDtoCoverage() {
+        Pet pet = new Pet();
+        pet.setName("Мурчик");
+        pet.setSpecies("кіт");
+        assertEquals("Мурчик", pet.getName());
+        assertEquals("кіт", pet.getSpecies());
 
-        appointments.add(new AppointmentInfoDTO(
-            LocalDate.of(2024, 9, 14), LocalTime.of(10, 0),
-            "Коваленко", "Олег", "Іванович", "380501234567",
-            "м. Київ", "вул. Шевченка", "12", "кв.5",
-            "Барсік", "кіт",
-            "Петренко Ірина Василівна", 5,
-            "Щеплення комплексною вакциною", true
-        ));
+        Veterinarian vet = new Veterinarian();
+        vet.setFullName("Петренко Ірина Василівна");
+        vet.setExperienceYears(5);
+        assertEquals("Петренко Ірина Василівна", vet.getFullName());
+        assertEquals(5, vet.getExperienceYears());
 
-        appointments.add(new AppointmentInfoDTO(
-            LocalDate.of(2024, 9, 14), LocalTime.of(14, 20),
-            "Бондаренко", "Дмитро", "Сергійович", "380731234567",
-            "м. Київ", "просп. Перемоги", "33", "",
-            "Муся", "кішка",
-            "Іваненко Андрій Миколайович", 3,
-            "Огляд після операції", false
-        ));
+        Veterinarian vetWithArgs = new Veterinarian("Мельник Оксана Петрівна", 7);
+        assertEquals("Мельник Оксана Петрівна", vetWithArgs.getFullName());
+        assertEquals(7, vetWithArgs.getExperienceYears());
 
-        appointments.add(new AppointmentInfoDTO(
-            LocalDate.of(2024, 9, 15), LocalTime.of(9, 15),
-            "Кравченко", "Сергій", "Володимирович", "380631234567",
-            "м. Київ", "вул. Саксаганського", "7", "",
-            "Зірка", "кішка",
-            "Мельник Оксана Петрівна", 7,
-            "Лікування захворювання шкіри", false
-        ));
-
-        assertEquals(3, appointments.size());
+        Owner owner = new Owner();
+        owner.setLastName("Коваленко");
+        owner.setFirstName("Олег");
+        owner.setPhone("380501234567");
         
-        long catCount = appointments.stream()
-            .filter(a -> a.getPetSpecies().toLowerCase().contains("кіт") || a.getPetSpecies().toLowerCase().contains("кішк"))
-            .count();
-        assertEquals(3, catCount);
+        assertEquals("Коваленко", owner.getLastName());
+        assertEquals("Олег", owner.getFirstName());
+        assertEquals("380501234567", owner.getPhone());
 
-        long experienceMoreThanFour = appointments.stream()
-            .filter(a -> a.getVetExperience() > 4)
-            .count();
-        assertEquals(2, experienceMoreThanFour);
+        Appointment app = new Appointment();
+        LocalDate date = LocalDate.of(2026, 6, 21);
+        LocalTime time = LocalTime.of(10, 0);
+        
+        app.setPet(pet);
+        app.setVeterinarian(vet);
+        app.setAppointmentDate(date);
+        app.setAppointmentTime(time);
+        app.setDiagnosisTreatment("Огляд");
+        app.setVaccinated(true);
 
-        long vaccinatedCount = appointments.stream()
-            .filter(AppointmentInfoDTO::isVaccinated)
-            .count();
-        assertEquals(1, vaccinatedCount);
+        assertEquals(pet, app.getPet());
+        assertEquals(vet, app.getVeterinarian());
+        assertEquals(date, app.getAppointmentDate());
+        assertEquals(time, app.getAppointmentTime());
+        assertEquals("Огляд", app.getDiagnosisTreatment());
+        assertTrue(app.isVaccinated());
+        Appointment appWithArgs = new Appointment(pet, vet, date, time, "Лікування", false);
+        assertFalse(appWithArgs.isVaccinated());
+
+        AppointmentInfoDTO dto = new AppointmentInfoDTO(
+            date, 
+            time, 
+            "Коваленко", "Олег", "Іванович", "380501234567",
+            "м. Черкаси", "вул. Шевченка", "12", "кв.5",
+            "Мурчик", "кіт",
+            "Петренко Ірина Василівна", 5,
+            "Огляд", 
+            true
+        );
+
+        assertNotNull(dto);
+        assertEquals("Мурчик", dto.getPetName());
+        assertEquals("Коваленко", dto.getOwnerLastName());
+        assertEquals("Петренко Ірина Василівна", dto.getVetFullName());
+        assertTrue(dto.isVaccinated());
+        assertEquals(5, dto.getVetExperience());
     }
 }
