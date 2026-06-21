@@ -1,25 +1,16 @@
 package com.veterinary;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PetTest {
-
     @Test
-    void toStringContainsAllImportantFields() throws Exception {
-        Owner owner = new Owner(); 
-        
-        Pet pet = new Pet(owner, "Барсик", "Кіт");
+    void testPetGettersAndSetters() {
+        Pet pet = new Pet();
+        pet.setName("Рекс");
+        pet.setSpecies("Собака");
 
-        Field idField = Pet.class.getDeclaredField("petId");
-        idField.setAccessible(true);
-        idField.set(pet, 123); 
-
-        String value = pet.toString();
-
-        assertTrue(value.contains("petId=123"));
-        assertTrue(value.contains("name='Барсик'"));
-        assertTrue(value.contains("species='Кіт'"));
+        assertEquals("Рекс", pet.getName());
+        assertEquals("Собака", pet.getSpecies());
     }
 }

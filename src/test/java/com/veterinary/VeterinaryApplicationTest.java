@@ -22,11 +22,16 @@ class VeterinaryApplicationTest {
     private static MongoClient testMongoClient;
 
     @BeforeAll
-    static void initFactory() {
-        String uri = "mongodb+srv://yonimonigm_db_user:hZVNgo3zuURKjM3H@veterinary.5nopo6y.mongodb.net/Veterinary?retryWrites=true&w=majority";
-        testMongoClient = MongoClients.create(uri);
-        MainApp.setMongoClient(testMongoClient);
+        static void initFactory() {
+         String uri = System.getenv("MONGO_URI");
+    
+            if (uri == null || uri.isEmpty()) {
+            uri = System.getProperty("spring.data.mongodb.uri");
     }
+    
+    testMongoClient = MongoClients.create(uri);
+    MainApp.setMongoClient(testMongoClient);
+}
     @AfterAll
     static void closeFactory() {
         if (testMongoClient != null) {
