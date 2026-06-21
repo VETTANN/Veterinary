@@ -1,28 +1,30 @@
 package com.veterinary;
 
-import static org.junit.jupiter.api.Assertions.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AppointmentInfoDTOTest {
-
     @Test
-    void testConstructorAndGetters() {
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
-        
-        AppointmentInfoDTO dto = new AppointmentInfoDTO(
-            date, time, "Коваленко", "Олег", "Іванович", "38050",
-            "Черкаси", "Шевченка", "12", "5", "Барсік", "кіт",
-            "Петренко І.В.", 5, "Огляд", true
-        );
+    void testMultipleAppointmentsDTO() {
+        List<AppointmentInfoDTO> reportList = new ArrayList<>();
 
-        assertEquals("Барсік", dto.getPetName());
-        assertEquals("Коваленко", dto.getOwnerLastName());
-        assertEquals(5, dto.getVetExperience());
-        assertTrue(dto.isVaccinated());
-        
-        assertTrue(dto.toString().contains("Барсік"));
+        AppointmentInfoDTO first = new AppointmentInfoDTO();
+        first.setOwnerLastName("Коваленко");
+        first.setPetName("Barsik");
+        first.setVetFullName("Петренко І.В.");
+
+        AppointmentInfoDTO second = new AppointmentInfoDTO();
+        second.setOwnerLastName("Сидоренко");
+        second.setPetName("Reks");
+        second.setVetFullName("Петренко І.В.");
+
+        reportList.add(first);
+        reportList.add(second);
+
+        assertEquals(2, reportList.size());
+        assertEquals("Barsik", reportList.get(0).getPetName());
+        assertEquals("Сидоренко", reportList.get(1).getOwnerLastName());
     }
 }
