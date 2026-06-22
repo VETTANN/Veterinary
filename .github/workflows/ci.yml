@@ -1,10 +1,6 @@
 name: CI
 
 on:
-  # Run on PR lifecycle events and on direct pushes to main, release/*.
-  # This setup avoids unnecessary workflow runs on events like 
-  # labeling or assigning reviewers, which don't change the code 
-  # and don't require a rebuild.
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [main, release/*]
@@ -12,7 +8,6 @@ on:
     branches: [main, release/*]
 
 jobs:
-  # Stage 1: code quality gate.
   static-analysis:
     name: Static Analysis
     runs-on: ubuntu-latest
@@ -42,8 +37,7 @@ jobs:
           name: static-analysis-logs
           path: target/ci-logs/**
           if-no-files-found: warn
-
-  # Stage 2: compile/package artifact only if static analysis passed.
+          
   build:
     name: Build
     runs-on: ubuntu-latest
